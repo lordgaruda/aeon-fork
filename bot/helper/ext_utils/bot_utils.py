@@ -21,7 +21,7 @@ from bot.helper.telegram_helper.bot_commands import BotCommands
 from bot.helper.telegram_helper.button_build import ButtonMaker
 from bot.helper.ext_utils.telegraph_helper import telegraph
 from bot.helper.ext_utils.shorteners import short_url
-
+from bot.helper.aeon_utils.tinyfy import tinyfy
 
 
 if config_dict.get('GDRIVE_ID'):
