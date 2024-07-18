@@ -39,7 +39,7 @@ try:
             error(f"Failed to download config.env {res.status_code}")
     except Exception as e:
         error(f"CONFIG_FILE_URL: {e}")
-except:
+except Exception:
     pass
 
 load_dotenv('config.env', override=True)
@@ -65,7 +65,7 @@ if DATABASE_URL:
 
 UPSTREAM_REPO = environ.get('UPSTREAM_REPO', '')
 if len(UPSTREAM_REPO) == 0:
-    UPSTREAM_REPO = 'https://github.com/lordgaruda/aeon-fork/'
+    UPSTREAM_REPO = 'https://github.com/lordgaruda/aeon-fork'
 
 UPSTREAM_BRANCH = environ.get('UPSTREAM_BRANCH', '')
 if len(UPSTREAM_BRANCH) == 0:
