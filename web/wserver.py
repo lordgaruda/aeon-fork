@@ -249,14 +249,13 @@ function s_validate() {
           src="https://graph.org/file/1a6ad157f55bc42b548df.png"
           alt="logo"
         />
-        <a href="https://telegram.me/lordgaruda">
         <a href="https://t.me/krn_adhikari">
           <h2 class="name">Bittorrent Selection</h2>
         </a>
       </div>
       <div class="social">
-        <a href="https://www.github.com/lorgaruda"><i class="fab fa-github"></i></a>
-        <a href="https://telegram.me/lorgaruda"><i class="fab fa-telegram"></i></a>
+        <a href="https://www.github.com/weebzone/WZML"><i class="fab fa-github"></i></a>
+        <a href="https://t.me/krn_adhikari"><i class="fab fa-telegram"></i></a>
       </div>
     </header>
     <div id="sticks">
@@ -647,8 +646,8 @@ section span{
         </a>
       </div>
       <div class="social">
-        <a href="https://www.github.com/lordgaruda"><i class="fab fa-github"></i></a>
-        <a href="https://telegram.me/"><i class="fab fa-telegram"></i></a>
+        <a href="https://www.github.com/weebzone/WZML"><i class="fab fa-github"></i></a>
+        <a href="https://t.me/krn_adhikari"><i class="fab fa-telegram"></i></a>
       </div>
     </header>
     <section>
