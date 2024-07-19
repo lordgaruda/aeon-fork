@@ -16,7 +16,7 @@ from psutil import disk_usage
 from pyrogram.types import BotCommand
 
 from bot.helper.ext_utils.db_handler import DbManager
-from bot import bot_name, DATABASE_URL, LOGGER, download_dict, download_dict_lock, botStartTime, user_data, config_dict, bot_loop, extra_buttons
+from bot import OWNER_ID,bot_name, DATABASE_URL, LOGGER, download_dict, download_dict_lock, botStartTime, user_data, config_dict, bot_loop, extra_buttons
 from bot.helper.telegram_helper.bot_commands import BotCommands
 from bot.helper.telegram_helper.button_build import ButtonMaker
 from bot.helper.ext_utils.telegraph_helper import telegraph
@@ -431,15 +431,14 @@ def new_thread(func):
 
 
 async def checking_access(user_id, button=None):
-    token_timeout = config_dict['TOKEN_TIMEOUT']
-    if not token_timeout:
+    if not config_dict['TOKEN_TIMEOUT'] or bool(user_id == OWNER_ID or user_id in user_data and user_data[user_id].get('is_auth')):
         return None, button
     user_data.setdefault(user_id, {})
     data = user_data[user_id]
     if DATABASE_URL:
         data['time'] = await DbManager().get_token_expiry(user_id)
     expire = data.get('time')
-    isExpired = (expire is None or expire is not None and (time() - expire) > token_timeout)
+    isExpired = (expire is None or expire is not None and (time() - expire) > config_dict['TOKEN_TIMEOUT'])
     if isExpired:
         token = data['token'] if expire is None and 'token' in data else str(uuid4())
         if expire is not None:
@@ -448,7 +447,7 @@ async def checking_access(user_id, button=None):
         if DATABASE_URL:
             await DbManager().update_user_token(user_id, token)
         user_data[user_id].update(data)
-        time_str = get_readable_time(token_timeout, True)
+        time_str = get_readable_time(config_dict['TOKEN_TIMEOUT'], True)
         if button is None:
             button = ButtonMaker()
         button.url('Collect token', tinyfy(short_url(f'https://telegram.me/{bot_name}?start={token}')))
