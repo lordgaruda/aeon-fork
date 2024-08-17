@@ -20,7 +20,7 @@ class _BotCommands:
         self.UnAuthorizeCommand = f"unauthorize{i}"
         self.AddSudoCommand = f"addsudo{i}"
         self.RmSudoCommand = f"rmsudo{i}"
-        self.PingCommand = "ping"
+        self.PingCommand = [f"ping", "p"]
         self.RestartCommand = [f"restart{i}", "restartall"]
         self.StatsCommand = [f"stats{i}", "statsall"]
         self.HelpCommand = f"help{i}"
@@ -30,7 +30,7 @@ class _BotCommands:
         self.ExecCommand = f"exec{i}"
         self.BotSetCommand = f"botsettings{i}"
         self.UserSetCommand = f"settings{i}"
-        self.SpeedCommand = f"speedtest{i}"
+        self.SpeedCommand = [f"speedtest{i}", "sp"]
         self.AddImageCommand = f"addimg{i}"
         self.ImagesCommand = f"images{i}"
         self.MediaInfoCommand = f"mediainfo{i}"
