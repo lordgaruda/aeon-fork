@@ -33,6 +33,7 @@ python-dotenv
 pyshorteners
 python-magic
 quoters
+phantomjs
 qbittorrent-api
 requests
 speedtest-cli
