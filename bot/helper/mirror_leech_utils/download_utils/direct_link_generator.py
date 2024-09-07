@@ -86,6 +86,10 @@ domain_dict = {
         "gibibox.com",
         "goaibox.com",
         "terasharelink.com",
+        "teraboxlink.com",
+        "freeterabox.com",
+        "1024terabox.com",
+        "teraboxshare.com"
     ],
     "filewish": [
         "filelions.co",
@@ -436,17 +440,52 @@ def uploadee(url):
     raise DirectDownloadLinkError("ERROR: Direct Link not found")
 
 
-def terabox(url):
-    if not path.isfile("terabox.txt"):
-        raise DirectDownloadLinkException("ERROR: terabox.txt not found")
-    try:
-        jar = MozillaCookieJar("terabox.txt")
-        jar.load()
-    except Exception as e:
-        raise DirectDownloadLinkException(f"ERROR: {e.__class__.__name__}")
-    cookies = {}
-    for cookie in jar:
-        cookies[cookie.name] = cookie.value
+def terabox(url, video_quality="HD Video", save_dir="HD_Video"):
+    """Terabox direct link generator
+    https://github.com/Dawn-India/Z-Mirror"""
+
+    pattern = r"/s/(\w+)|surl=(\w+)"
+    if not search(pattern, url):
+        raise DirectDownloadLinkError("ERROR: Invalid terabox URL")
+
+    netloc = urlparse(url).netloc
+    terabox_url = url.replace(netloc, "1024tera.com")
+
+    urls = [
+        "https://ytshorts.savetube.me/api/v1/terabox-downloader",
+        f"https://teraboxvideodownloader.nepcoderdevs.workers.dev/?url={terabox_url}",
+        f"https://terabox.udayscriptsx.workers.dev/?url={terabox_url}",
+        f"https://mavimods.serv00.net/Mavialt.php?url={terabox_url}",
+        f"https://mavimods.serv00.net/Mavitera.php?url={terabox_url}",
+    ]
+
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:126.0) Gecko/20100101 Firefox/126.0",
+        "Accept": "application/json, text/plain, */*",
+        "Accept-Language": "en-US,en;q=0.5",
+        "Content-Type": "application/json",
+        "Origin": "https://ytshorts.savetube.me",
+        "Alt-Used": "ytshorts.savetube.me",
+        "Sec-Fetch-Dest": "empty",
+        "Sec-Fetch-Mode": "cors",
+        "Sec-Fetch-Site": "same-origin",
+    }
+
+    for base_url in urls:
+        try:
+            if "api/v1" in base_url:
+                response = post(base_url, headers=headers, json={"url": terabox_url})
+            else:
+                response = get(base_url)
+
+            if response.status_code == 200:
+                break
+        except Exception as e:
+            raise DirectDownloadLinkError(f"ERROR: {e.__class__.__name__}") from e
+    else:
+        raise DirectDownloadLinkError("ERROR: Unable to fetch the JSON data")
+
+    data = response.json()
     details = {"contents": [], "title": "", "total_size": 0}
     details["header"] = " ".join(f"{key}: {value}" for key, value in cookies.items())
 
